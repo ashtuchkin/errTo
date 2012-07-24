@@ -14,7 +14,7 @@ readDirectoryAsync = (catalog, callback) ->
         if err? then return callback(err)
         callback null, filenames
 
-errTo = require 'errTo'
+errTo = require 'errto'
 
 # Same function, with the errTo helper.
 readDirectoryAsync = (catalog, callback) ->
