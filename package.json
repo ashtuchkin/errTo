@@ -1,0 +1,20 @@
+{
+    "name": "errTo",
+    "description": "Simple error handling helper.",
+    "version": "0.1.0",
+    
+    "keywords": ["error", "handling"],
+    "author": "Alexander Shtuchkin <ashtuchkin@gmail.com>",
+    
+    "homepage": "https://github.com/ashtuchkin/errTo",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/ashtuchkin/errTo.git"
+    },
+    "scripts": {
+      "test": "vows --spec"
+    },
+    "devDependencies": {
+        "vows": "latest"
+    }
+}
