@@ -1,4 +1,4 @@
-# errTo - simple error handling helper for Node.js/CoffeeScript
+## errTo - simple error handling helper for Node.js/CoffeeScript/IcedCoffeeScript
 
 [![Build Status](https://secure.travis-ci.org/ashtuchkin/errTo.png?branch=master)](http://travis-ci.org/ashtuchkin/errTo)
 
@@ -68,12 +68,39 @@ app.get('/', function(req, res, next) {
 });
 ```
 
+## Sample Usage (IcedCoffeeScript)
+
+```coffeescript
+# Almost the same as in CoffeeScript
+errTo = require 'errto'
+
+app.get '/', (req, res, next) ->
+    await db.getUserById req.userId, errTo next, defer user  # Notice, errTo is outside defer.
+    res.render 'index', {user}
+
+app.get '/posts/:postId', (req, res, next) ->
+    noErr = errTo.bind(null, next) # errTo can be bound in the beginning, using standard JS construct.
+    await db.getPostById req.param('postId'), noErr defer post
+    
+    await
+        # Notice these 2 requests will be run in parallel and if at least one of them fails (returns error)
+        # then the whole block fails. But if both fail, then only the first error is kept.
+        db.getPostComments post._id, errTo next, defer comments
+        db.getPostText post._id, errTo next, defer text
+
+    render 'post', {comments, text}
+```
+
 ## How it works
 
-(See index.js, its only 15 LOC)
+(See index.js, its only 19 LOC)
 
 errTo function takes 2 arguments: errorHandler and successHandler. It returns a function which, when called,
 will check if its first argument (err) is truthy and call first or second function correspondingly. 
 errorHandler is called with 'err' argument. successHandler is called with all but the 'err' argument.
+
+Note, either errorHandler or successHandler will be called, and only once. All subsequent calls will be ignored.
+Also, a errorHandler will not be called more than once, even if wrapped by different calls to errTo. This is needed
+to provide protection when multiple commands are executing at the same time.
 
 **License: MIT**

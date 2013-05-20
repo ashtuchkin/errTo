@@ -1,10 +1,11 @@
 {
     "name": "errto",
     "description": "Simple error handling helper.",
-    "version": "0.1.0",
+    "version": "0.2.0",
     
     "keywords": ["error", "handling"],
     "author": "Alexander Shtuchkin <ashtuchkin@gmail.com>",
+    "license": "MIT",
     
     "homepage": "https://github.com/ashtuchkin/errTo",
     "repository": {
